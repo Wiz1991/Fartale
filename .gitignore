@@ -30,3 +30,8 @@
 *.exe
 *.out
 *.app
+/.vs
+/Fartale/.vs/Fartale/v16
+/Fartale/x64
+/x64
+/Fartale/Fartale.vcxproj.user
