@@ -1,15 +1,16 @@
 #include "Application.h"
+#include "Utilities.h"
 
 Application::Application()
 	: mWindow(sf::VideoMode(1280, 720), "Fartale", sf::Style::Close)
 	, mStatisticsFrames(0)
-	, mStatisticsUpdateTime(sf::Time::Zero)
 {
 	mFonts.load("assets/Fonts/main.ttf", Fonts::MAIN);
 
-	mStatisticsFPS.setFont(mFonts.get(Fonts::MAIN));
-	mStatisticsFPS.setCharacterSize(12);
-	mStatisticsFPS.setPosition(5, 5);
+	mStatisticsText.setFont(mFonts.get(Fonts::MAIN));
+	mStatisticsText.setCharacterSize(12);
+	mStatisticsText.setPosition(5, 5);
+	mStatisticsText.setFillColor(sf::Color::Black);
 }
 
 void Application::run()
@@ -38,18 +39,28 @@ void Application::update(sf::Time dT)
 
 void Application::processEvents()
 {
+	sf::Event event;
+	while (mWindow.pollEvent(event)) {
+		if (event.type == sf::Event::Closed)
+			mWindow.close();
+	}
 }
 
 void Application::render()
 {
+	mWindow.clear(sf::Color::White);
+
+	mWindow.draw(mStatisticsText);
+
+	mWindow.display();
 }
 
 void Application::updateStatistics(sf::Time dT)
 {
 	mStatisticsUpdateTime += dT;
 	mStatisticsFrames += 1;
-	if (mStatisticsUpdateTime.asSeconds > sf::seconds(1)) {
-		mStatisticsFPS.setString("FPS: " + toString(mStatisticsFPS));
+	if (mStatisticsUpdateTime >= sf::seconds(1)) {
+		mStatisticsText.setString("FPS: " + toString(mStatisticsFrames));
 
 		mStatisticsUpdateTime = sf::Time::Zero;
 		mStatisticsFrames = 0;

@@ -1,7 +1,9 @@
 #pragma once
-#include <string>
 #include <sstream>
-#include <SFML/Graphics/Sprite.hpp>
+namespace sf {
+	class Sprite;
+	class Text;
+}
 
 template<typename T>
 std::string toString(T value) {
@@ -13,4 +15,8 @@ std::string toString(T value) {
 void centerOrigin(sf::Sprite& sprite) {
 	sf::FloatRect size = sprite.getLocalBounds();
 	sprite.setOrigin(size.width / 2, size.height / 2);
+}
+void centerOrigin(sf::Text& text) {
+	sf::FloatRect size = text.getLocalBounds();
+	text.setOrigin(size.width / 2, size.height / 2);
 }

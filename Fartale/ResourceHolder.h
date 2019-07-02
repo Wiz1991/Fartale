@@ -10,6 +10,6 @@ public:
 	void load(std::string fileName, Identifier ID);
 	Resource& get(Identifier ID);
 private:
-	std::unordered_map<Identifier, Resource> mResourceMap;
+	std::unordered_map<Identifier, std::unique_ptr<Resource>> mResourceMap;
 };
 #include "ResourceHolder.inl"

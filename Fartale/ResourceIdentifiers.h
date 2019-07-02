@@ -1,7 +1,9 @@
 #pragma once
 #include "ResourceHolder.h"
-#include <SFML/Graphics/Sprite.hpp>
-#include <SFML/Graphics/Font.hpp>
+namespace sf {
+	class Texture;
+	class Font;
+}
 namespace Textures {
 	enum ID {
 	};

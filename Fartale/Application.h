@@ -1,11 +1,8 @@
 #pragma once
-#include <SFML/Graphics/RenderWindow.hpp>
-#include <SFML/System/Time.hpp>
-#include <SFML/Window/Event.hpp>
-#include <SFML/Graphics/Text.hpp>
-#include "Utilities.h"
+#include "ResourceHolder.h"
 #include "ResourceIdentifiers.h"
 
+#include <SFML/Graphics.hpp>
 class Application
 {
 public:
@@ -23,7 +20,7 @@ private:
 
 	sf::Time mStatisticsUpdateTime;
 	std::size_t mStatisticsFrames;
-	sf::Text mStatisticsFPS;
+	sf::Text mStatisticsText;
 
 	FontManager mFonts;
 	TextureManager mTextures;
