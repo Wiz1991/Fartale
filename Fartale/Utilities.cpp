@@ -3,12 +3,12 @@
 #include "SFML/Graphics/Text.hpp"
 
 void centerOrigin(sf::Sprite& sprite) {
-	sf::FloatRect size = sprite.getLocalBounds();
-	sprite.setOrigin(size.width / 2, size.height / 2);
+	sf::FloatRect bounds = sprite.getLocalBounds();
+	sprite.setOrigin(std::floor(bounds.left + bounds.width / 2.f), std::floor(bounds.top + bounds.height / 2.f));
 }
 
 void centerOrigin(sf::Text& text)
 {
-	sf::FloatRect size = text.getGlobalBounds();
-	text.setOrigin(size.width / 2, size.height / 2);
+	sf::FloatRect bounds = text.getLocalBounds();
+	text.setOrigin(std::floor(bounds.left + bounds.width / 2.f), std::floor(bounds.top + bounds.height / 2.f));
 }

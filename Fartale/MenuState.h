@@ -1,5 +1,7 @@
 #pragma once
 #include "State.h"
+#include "Container.h"
+
 #include <SFML/Graphics/Sprite.hpp>
 
 class MenuState : public State
@@ -13,4 +15,5 @@ public:
 
 private:
 	sf::Sprite mBackground;
+	Container mGUIContainer;
 };

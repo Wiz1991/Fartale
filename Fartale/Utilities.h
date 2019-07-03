@@ -12,11 +12,5 @@ std::string toString(T value) {
 	return ss.str();
 }
 
-void centerOrigin(sf::Sprite& sprite) {
-	sf::FloatRect size = sprite.getLocalBounds();
-	sprite.setOrigin(size.width / 2, size.height / 2);
-}
-void centerOrigin(sf::Text& text) {
-	sf::FloatRect size = text.getLocalBounds();
-	text.setOrigin(size.width / 2, size.height / 2);
-}
+void centerOrigin(sf::Sprite& sprite);
+void centerOrigin(sf::Text& text);
