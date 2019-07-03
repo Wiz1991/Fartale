@@ -24,12 +24,13 @@ void StateStack::draw()
 	}
 }
 
-void StateStack::handleEvents(const sf::Event& event)
+void StateStack::handleEvent(const sf::Event& event)
 {
 	for (auto& it : mStateStack) {
-		if (!it->handleEvents(event))
+		if (!it->handleEvent(event))
 			break;
 	}
+	applyPendingChanges();
 }
 
 void StateStack::pushState(States::ID stateID)
@@ -65,12 +66,16 @@ void StateStack::applyPendingChanges()
 		switch (change.mAction) {
 		case Action::Push:
 			mStateStack.push_back(createState(change.stateID));
+			break;
 		case Action::Pop:
 			mStateStack.pop_back();
+			break;
 		case Action::Clear:
 			mStateStack.clear();
+			break;
 		}
 	}
+	mPendingList.clear();
 }
 
 StateStack::PendingChange::PendingChange(Action action, States::ID id)

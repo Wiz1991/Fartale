@@ -24,7 +24,7 @@ public:
 
 	virtual void draw() = 0;
 	virtual bool update(sf::Time dT) = 0;
-	virtual bool handleEvents(const sf::Event& event) = 0;
+	virtual bool handleEvent(const sf::Event& event) = 0;
 
 protected:
 	void requestStackPush(States::ID ID);
