@@ -2,7 +2,9 @@
 #include "ResourceHolder.h"
 #include "ResourceIdentifiers.h"
 #include "StateStack.h"
-#include <SFML/Graphics.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Time.hpp>
+#include <SFML/Graphics/Text.hpp>
 
 class Application
 {
@@ -25,6 +27,7 @@ private:
 	sf::Time mStatisticsUpdateTime;
 	std::size_t mStatisticsFrames;
 	sf::Text mStatisticsText;
+	bool displayStatistics;
 
 	FontManager mFonts;
 	TextureManager mTextures;

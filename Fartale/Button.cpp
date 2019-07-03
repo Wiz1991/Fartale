@@ -12,18 +12,10 @@ Button::Button(TextureManager& textures, FontManager& fonts)
 	mButton.setTextureRect(sf::IntRect(0, 0, 190, 49));
 	mButton.setTexture(mNormalTexture);
 
-	sf::FloatRect txtBounds = mText.getLocalBounds();
-	mText.setOrigin(txtBounds.width / 2, txtBounds.height / 2);
-
-	sf::FloatRect btnBounds = mButton.getLocalBounds();
-	mButton.setOrigin(btnBounds.width / 2, btnBounds.height / 2);
-
-	mButton.setPosition(mText.getPosition().x, mText.getPosition().y);
+	centerOrigin(mButton);
+	centerOrigin(mText);
 
 	mText.setFillColor(sf::Color::Black);
-
-	printf("mButton position: X: %f,Y: %f\n", mButton.getPosition().x, mButton.getPosition().y);
-	printf("mText position: X: %f,Y:%f\n", mText.getPosition().x, mText.getPosition().y);
 }
 void Button::setCallBack(CallBack callback)
 {
@@ -41,16 +33,20 @@ void Button::handleEvent(const sf::Event&)
 void Button::select()
 {
 	Widget::select();
+	setTextColor(sf::Color::White);
 }
 
 void Button::deselect()
 {
 	Widget::deselect();
+	setTextColor(sf::Color::Black);
 }
 
 void Button::activate()
 {
 	Widget::activate();
+
+	mButton.setTextureRect(sf::IntRect(0, 49, 190, 45)); //pressed texture
 
 	if (mCallBack)
 		mCallBack();
@@ -61,11 +57,19 @@ void Button::activate()
 void Button::deactivate()
 {
 	Widget::deactivate();
+
+	mButton.setTextureRect(sf::IntRect(0, 0, 190, 49)); //normal texture
 }
 
 void Button::setText(std::string text)
 {
 	mText.setString(text);
+	centerOrigin(mText);
+}
+
+void Button::setTextColor(sf::Color color)
+{
+	mText.setFillColor(color);
 }
 
 void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const

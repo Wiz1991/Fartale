@@ -29,6 +29,8 @@ public:
 	virtual void deactivate();
 
 	void setText(std::string text);
+	void setTextColor(sf::Color color);
+
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states)const;
 private:

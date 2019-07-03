@@ -10,8 +10,8 @@ StateStack::StateStack(State::Context context)
 
 void StateStack::update(sf::Time dT)
 {
-	for (auto& it : mStateStack) {
-		if (!it->update(dT))
+	for (auto it = mStateStack.rbegin(); it != mStateStack.rend(); ++it) {
+		if (!(*it)->update(dT))
 			break;
 	}
 	applyPendingChanges();
@@ -26,8 +26,8 @@ void StateStack::draw()
 
 void StateStack::handleEvent(const sf::Event& event)
 {
-	for (auto& it : mStateStack) {
-		if (!it->handleEvent(event))
+	for (auto it = mStateStack.rbegin(); it != mStateStack.rend(); ++it) {
+		if (!(*it)->handleEvent(event))
 			break;
 	}
 	applyPendingChanges();

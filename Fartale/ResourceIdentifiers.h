@@ -6,7 +6,8 @@ namespace sf {
 }
 namespace Textures {
 	enum ID {
-		blueButtons
+		blueButtons,
+		MenuBackground
 	};
 }
 namespace Fonts {

@@ -2,7 +2,7 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
-
+#include "Utilities.h"
 Container::Container()
 	: mSelectedChild(-1)
 	, mChildren()
@@ -12,8 +12,8 @@ Container::Container()
 void Container::pack(Widget::Ptr widget)
 {
 	mChildren.push_back(std::move(widget));
-
-	select(mChildren.size() - 1);
+	if (!hasSelected() && mChildren[mChildren.size() - 1]->isSelectable())
+		select(mChildren.size() - 1);
 }
 
 void Container::handleEvent(const sf::Event& event)
@@ -22,14 +22,16 @@ void Container::handleEvent(const sf::Event& event)
 		mChildren[mSelectedChild]->handleEvent(event);
 
 	if (event.type == sf::Event::KeyReleased) {
-		if (event.key.code == sf::Keyboard::Return || event.key.code == sf::Keyboard::Space)
+		if (event.key.code == Key::ENTER || event.key.code == Key::SPACE) {
 			if (hasSelected())
 				mChildren[mSelectedChild]->activate();
-
-			else if (event.key.code == sf::Keyboard::S)
-				selectNext();
-			else if (event.key.code == sf::Keyboard::W)
-				selextPrevious();
+		}
+		if (event.key.code == Key::S || event.key.code == Key::DOWN) {
+			selectNext();
+		}
+		if (event.key.code == Key::W || event.key.code == Key::UP) {
+			selextPrevious();
+		}
 	}
 }
 

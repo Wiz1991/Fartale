@@ -1,14 +1,18 @@
 #include "Application.h"
 #include "Utilities.h"
 #include "MenuState.h"
+#include "GameState.h"
+#include "PauseState.h"
 
 Application::Application()
 	: mWindow(sf::VideoMode(1280, 720), "Fartale", sf::Style::Close)
 	, mStatisticsFrames(0)
 	, mStateStack(State::Context(mWindow, mTextures, mFonts))
+	, displayStatistics(false)
 {
 	mFonts.load("assets/Fonts/main.ttf", Fonts::MAIN);
 	mTextures.load("assets/Textures/UIpack/Spritesheet/blueSheet.png", Textures::blueButtons);
+	mTextures.load("assets/Textures/Abstract Platformer/PNG/Backgrounds/set3_background.png", Textures::MenuBackground);
 
 	mStatisticsText.setFont(mFonts.get(Fonts::MAIN));
 	mStatisticsText.setCharacterSize(12);
@@ -54,6 +58,8 @@ void Application::processEvents()
 		mStateStack.handleEvent(event);
 		if (event.type == sf::Event::Closed)
 			mWindow.close();
+		if (event.type == sf::Event::KeyReleased && event.key.code == Key::F9)
+			displayStatistics = !displayStatistics;
 	}
 }
 
@@ -62,7 +68,9 @@ void Application::render()
 	mWindow.clear(sf::Color::White);
 
 	mStateStack.draw();
-	mWindow.draw(mStatisticsText);
+
+	if (displayStatistics)
+		mWindow.draw(mStatisticsText);
 
 	mWindow.display();
 }
@@ -72,7 +80,8 @@ void Application::updateStatistics(sf::Time dT)
 	mStatisticsUpdateTime += dT;
 	mStatisticsFrames += 1;
 	if (mStatisticsUpdateTime >= sf::seconds(1)) {
-		mStatisticsText.setString("FPS: " + toString(mStatisticsFrames));
+		mStatisticsText.setString("FPS: " + toString(mStatisticsFrames)
+			+ "\nTime: " + toString(mStatisticsUpdateTime.asMilliseconds()));
 
 		mStatisticsUpdateTime = sf::Time::Zero;
 		mStatisticsFrames = 0;
@@ -82,4 +91,6 @@ void Application::updateStatistics(sf::Time dT)
 void Application::registerStates()
 {
 	mStateStack.registerState<MenuState>(States::MENU);
+	mStateStack.registerState<GameState>(States::GAME);
+	mStateStack.registerState<PauseState>(States::PAUSED);
 }
