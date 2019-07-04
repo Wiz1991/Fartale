@@ -26,10 +26,13 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="PauseState.cpp" />
+    <ClCompile Include="SceneNode.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateStack.cpp" />
+    <ClCompile Include="TextNode.cpp" />
     <ClCompile Include="Utilities.cpp" />
     <ClCompile Include="Widget.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h" />
@@ -40,11 +43,15 @@
     <ClInclude Include="PauseState.h" />
     <ClInclude Include="ResourceHolder.h" />
     <ClInclude Include="ResourceIdentifiers.h" />
+    <ClInclude Include="SceneCategories.h" />
+    <ClInclude Include="SceneNode.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateIdentifiers.h" />
     <ClInclude Include="StateStack.h" />
+    <ClInclude Include="TextNode.h" />
     <ClInclude Include="Utilities.h" />
     <ClInclude Include="Widget.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ResourceHolder.inl" />

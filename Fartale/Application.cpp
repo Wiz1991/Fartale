@@ -9,6 +9,7 @@ Application::Application()
 	, mStatisticsFrames(0)
 	, mStateStack(State::Context(mWindow, mTextures, mFonts))
 	, displayStatistics(false)
+
 {
 	mFonts.load("assets/Fonts/main.ttf", Fonts::MAIN);
 	mTextures.load("assets/Textures/UIpack/Spritesheet/blueSheet.png", Textures::blueButtons);
@@ -80,8 +81,7 @@ void Application::updateStatistics(sf::Time dT)
 	mStatisticsUpdateTime += dT;
 	mStatisticsFrames += 1;
 	if (mStatisticsUpdateTime >= sf::seconds(1)) {
-		mStatisticsText.setString("FPS: " + toString(mStatisticsFrames)
-			+ "\nTime: " + toString(mStatisticsUpdateTime.asMilliseconds()));
+		mStatisticsText.setString("FPS: " + toString(mStatisticsFrames));
 
 		mStatisticsUpdateTime = sf::Time::Zero;
 		mStatisticsFrames = 0;

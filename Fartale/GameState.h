@@ -1,5 +1,7 @@
 #pragma once
 #include "State.h"
+#include "World.h"
+#include <SFML/Graphics/Texture.hpp>
 class GameState : public State
 {
 public:
@@ -10,4 +12,5 @@ public:
 	virtual void draw();
 
 private:
+	World mWorld;
 };
