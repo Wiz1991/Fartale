@@ -13,4 +13,5 @@ public:
 
 private:
 	World mWorld;
+	PlayerController& mPlayer;
 };

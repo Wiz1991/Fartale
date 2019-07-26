@@ -1,5 +1,6 @@
 #include "State.h"
 #include "StateStack.h"
+#include "PlayerController.h"
 State::State(StateStack& stack, Context context)
 	: mStack(&stack)
 	, mContext(context)
@@ -26,9 +27,10 @@ State::Context State::getContext()
 	return mContext;
 }
 
-State::Context::Context(sf::RenderWindow& mWindow, TextureManager& mTextureManager, FontManager& mFontManager)
+State::Context::Context(sf::RenderWindow& mWindow, TextureManager& mTextureManager, FontManager& mFontManager, PlayerController& mPlayer)
 	: window(&mWindow)
 	, textureHolder(&mTextureManager)
 	, fontHolder(&mFontManager)
+	, player(&mPlayer)
 {
 }

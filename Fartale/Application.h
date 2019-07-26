@@ -5,6 +5,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include "PlayerController.h"
 
 class Application
 {
@@ -33,4 +34,6 @@ private:
 	TextureManager mTextures;
 
 	StateStack mStateStack;
+
+	PlayerController mPlayer;
 };

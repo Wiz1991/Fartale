@@ -12,6 +12,7 @@ public:
 	void setText(std::string text);
 	void setColor(sf::Color color);
 	void setFont(Fonts::ID fontID);
+	void setCharacterSize(std::size_t size);
 
 private:
 	virtual void drawCurrent(sf::RenderTarget& target, sf::RenderStates states)const;

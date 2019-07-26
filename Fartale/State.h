@@ -8,17 +8,18 @@ namespace sf {
 	class RenderWindow;
 }
 class StateStack;
-
+class PlayerController;
 class State
 {
 public:
 	typedef std::unique_ptr<State> Ptr;
 	struct Context {
-		Context(sf::RenderWindow& mWindow, TextureManager& mTextureManager, FontManager& mFontManager);
+		Context(sf::RenderWindow& mWindow, TextureManager& mTextureManager, FontManager& mFontManager, PlayerController& mPlayer);
 
 		sf::RenderWindow* window;
 		TextureManager* textureHolder;
 		FontManager* fontHolder;
+		PlayerController* player;
 	};
 	State(StateStack& stack, Context context);
 

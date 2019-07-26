@@ -7,8 +7,10 @@
 template<typename Identifier, typename Resource>
 class ResourceHolder {
 public:
-	void load(std::string fileName, Identifier ID);
+	void load(const std::string& fileName, Identifier ID);
+
 	Resource& get(Identifier ID);
+
 private:
 	std::unordered_map<Identifier, std::unique_ptr<Resource>> mResourceMap;
 };

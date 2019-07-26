@@ -25,6 +25,11 @@ void TextNode::setFont(Fonts::ID fontID)
 	mText.setFont(mFonts.get(fontID));
 }
 
+void TextNode::setCharacterSize(std::size_t size)
+{
+	mText.setCharacterSize(size);
+}
+
 void TextNode::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	states.transform *= getTransform();

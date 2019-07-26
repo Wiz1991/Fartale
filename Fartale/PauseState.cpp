@@ -10,17 +10,15 @@ PauseState::PauseState(StateStack& stack, Context context)
 {
 	overlay.setFillColor({ 5,5,5,170 });
 
-	sf::Vector2f winSize(context.window->getSize());
-
 	auto resume = std::make_shared<Button>(*context.textureHolder, *context.fontHolder);
-	resume->setPosition(winSize.x / 2, winSize.y / 2 - 40);
+	resume->setPosition(overlay.getGlobalBounds().width / 2, overlay.getGlobalBounds().height / 2 - 40);
 	resume->setText("Resume");
 	resume->setCallBack([this]() {
 		requestStackPop();
 		});
 
 	auto MainMenu = std::make_shared<Button>(*context.textureHolder, *context.fontHolder);
-	MainMenu->setPosition(winSize.x / 2, winSize.y / 2 + 10);
+	MainMenu->setPosition(overlay.getGlobalBounds().width / 2, overlay.getGlobalBounds().height / 2 + 10);
 	MainMenu->setText("Main Menu");
 	MainMenu->setCallBack([this]() {
 		requestStackClear();
@@ -28,7 +26,7 @@ PauseState::PauseState(StateStack& stack, Context context)
 		});
 
 	auto exit = std::make_shared<Button>(*context.textureHolder, *context.fontHolder);
-	exit->setPosition(winSize.x / 2, winSize.y / 2 + 80);
+	exit->setPosition(overlay.getGlobalBounds().width / 2, overlay.getGlobalBounds().height / 2 + 80);
 	exit->setText("Exit to Desktop");
 	exit->setCallBack([this]() {
 		requestStackClear();
@@ -55,7 +53,7 @@ bool PauseState::handleEvent(const sf::Event& event)
 void PauseState::draw()
 {
 	sf::RenderWindow& window = *getContext().window;
-
+	window.setView(window.getDefaultView());
 	window.draw(overlay);
 
 	window.draw(mGUIContainer);

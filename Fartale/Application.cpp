@@ -7,7 +7,8 @@
 Application::Application()
 	: mWindow(sf::VideoMode(1280, 720), "Fartale", sf::Style::Close)
 	, mStatisticsFrames(0)
-	, mStateStack(State::Context(mWindow, mTextures, mFonts))
+	, mPlayer()
+	, mStateStack(State::Context(mWindow, mTextures, mFonts, mPlayer))
 	, displayStatistics(false)
 
 {
@@ -69,7 +70,7 @@ void Application::render()
 	mWindow.clear(sf::Color::White);
 
 	mStateStack.draw();
-
+	mWindow.setView(mWindow.getDefaultView());
 	if (displayStatistics)
 		mWindow.draw(mStatisticsText);
 

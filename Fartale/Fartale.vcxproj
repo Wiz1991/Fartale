@@ -21,12 +21,20 @@
   <ItemGroup>
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="Button.cpp" />
+    <ClCompile Include="CollisionNode.cpp" />
+    <ClCompile Include="Command.cpp" />
+    <ClCompile Include="CommandQueue.cpp" />
     <ClCompile Include="Container.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="GameState.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MapLoader.cpp" />
     <ClCompile Include="MenuState.cpp" />
     <ClCompile Include="PauseState.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerController.cpp" />
     <ClCompile Include="SceneNode.cpp" />
+    <ClCompile Include="SpriteNode.cpp" />
     <ClCompile Include="State.cpp" />
     <ClCompile Include="StateStack.cpp" />
     <ClCompile Include="TextNode.cpp" />
@@ -37,14 +45,22 @@
   <ItemGroup>
     <ClInclude Include="Application.h" />
     <ClInclude Include="Button.h" />
+    <ClInclude Include="CollisionNode.h" />
+    <ClInclude Include="Command.h" />
+    <ClInclude Include="CommandQueue.h" />
     <ClInclude Include="Container.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="GameState.h" />
+    <ClInclude Include="MapLoader.h" />
     <ClInclude Include="MenuState.h" />
     <ClInclude Include="PauseState.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerController.h" />
     <ClInclude Include="ResourceHolder.h" />
     <ClInclude Include="ResourceIdentifiers.h" />
     <ClInclude Include="SceneCategories.h" />
     <ClInclude Include="SceneNode.h" />
+    <ClInclude Include="SpriteNode.h" />
     <ClInclude Include="State.h" />
     <ClInclude Include="StateIdentifiers.h" />
     <ClInclude Include="StateStack.h" />
@@ -122,7 +138,7 @@
       <PreprocessorDefinitions>_MBCS;SFML_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <AdditionalLibraryDirectories>$(SolutionDir)SFML-2.5.1/lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-graphics-s-d.lib;sfml-window-s-d.lib;sfml-system-s-d.lib;openal32.lib;ws2_32.lib;winmm.lib;opengl32.lib;sfml-main-d.lib;sfml-audio-s-d.lib;vorbis.lib;sfml-network-s-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>

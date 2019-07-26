@@ -8,18 +8,31 @@
 #include <memory>
 #include <vector>
 #include "SceneCategories.h"
+#include <set>
+#include "Command.h"
 
 class SceneNode : public sf::Drawable, public sf::Transformable, private sf::NonCopyable
 {
 public:
 	typedef std::unique_ptr<SceneNode> Ptr;
-	explicit SceneNode(Layers category = Layers::NONE);
+	typedef std::pair<SceneNode*, SceneNode*> Pair;
+
+	explicit SceneNode(Category::Type category = Category::Type::NONE);
 
 	void attachNode(Ptr node);
 	void detachNode(Ptr& node);
 
 	void update(sf::Time dT);
 
+	sf::Vector2f getWorldPosition() const;
+	sf::Transform getWorldTransform() const;
+	virtual sf::FloatRect getBoundingRect() const;
+	virtual unsigned int getCategory() const;
+
+	void checkSceneCollision(SceneNode& sceneGraph, std::set<Pair>& collisionPairs, sf::FloatRect view);
+	void checkNodeCollision(SceneNode& node, std::set<Pair>& collisionPairs, sf::FloatRect view);
+
+	void onCommand(const Command& command, sf::Time dT);
 private:
 	virtual void updateCurrent(sf::Time dT);
 	void updateChildren(sf::Time dT);
@@ -31,5 +44,7 @@ private:
 private:
 	std::vector<Ptr> mChildren;
 	SceneNode* mParent;
-	Layers mCategory;
+	Category::Type mDefaultCategory;
 };
+
+bool collision(const SceneNode& lhs, const SceneNode& rhs);

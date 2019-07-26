@@ -2,11 +2,11 @@
 #pragma once
 
 template<typename Identifier, typename Resource>
-void ResourceHolder<Identifier, Resource>::load(std::string fileName, Identifier ID)
+void ResourceHolder<Identifier, Resource>::load(const std::string& fileName, Identifier ID)
 {
 	std::unique_ptr<Resource> resource(new Resource());
 	if (!resource->loadFromFile(fileName))
-		throw std::runtime_error(std::string("ResourceHolder::load() - failed to load:  " + fileName));
+		throw std::runtime_error(std::string("ResourceHolder::load(Identifier ID) - failed to load:  " + fileName));
 	mResourceMap.insert(std::make_pair(ID, std::move(resource)));
 }
 

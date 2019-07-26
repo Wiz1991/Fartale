@@ -75,10 +75,34 @@
     <ClCompile Include="SceneNode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TextNode.cpp">
+    <ClCompile Include="World.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="World.cpp">
+    <ClCompile Include="MapLoader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TextNode.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="SpriteNode.cpp">
+      <Filter>Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Command.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CommandQueue.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -125,13 +149,37 @@
     <ClInclude Include="SceneNode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TextNode.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SceneCategories.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="World.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MapLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TextNode.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="SpriteNode.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionNode.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Command.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CommandQueue.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
