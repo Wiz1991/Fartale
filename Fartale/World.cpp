@@ -3,6 +3,10 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include "SpriteNode.h"
 #include "CollisionNode.h"
+#include "Utilities.h"
+#include <iomanip>
+#include <sstream>
+
 World::World(sf::RenderWindow& window, FontManager& fonts)
 	: mWorldView(window.getDefaultView())
 	, mTextures()
@@ -13,28 +17,45 @@ World::World(sf::RenderWindow& window, FontManager& fonts)
 	, mLevelLoader(mSceneLayers, mTextures)
 	, mPlayer(nullptr)
 	, mCommandQueue()
+	, mStatistics("", fonts.get(Fonts::MAIN), 12)
 
 {
 	buildScene();
 	loadMap();
+	mWindow.setKeyRepeatEnabled(false);
+	mStatistics.setPosition(5, 20);
+	mStatistics.setFillColor(sf::Color::Black);
 }
 void World::update(sf::Time dT)
 {
-	mWorldView.setCenter(mPlayer->getPosition());
+	std::stringstream ss;
+	ss << std::fixed << std::setprecision(2)
+		<< "VEL: X[" << mPlayer->getVelocity().x
+		<< "] Y[" << mPlayer->getVelocity().y << "]" << "\n"
+		<< "POS: X[" << mPlayer->getWorldPosition().x << "] Y["
+		<< mPlayer->getPosition().y << "]";
+
+	std::string stats = ss.str();
+	mStatistics.setString(stats);
+
+	//mWorldView.setCenter(mPlayer->getPosition());
+
 	mPlayer->setVelocity(0, 0);
 
-	if (!mCommandQueue.isEmpty())
+	while (!mCommandQueue.isEmpty())
 		mSceneGraph.onCommand(mCommandQueue.pop(), dT);
 
-	adaptPlayerVelocity();
-	//handleCollisions();
-	printf("%2f,%2f\n", mPlayer->getVelocity().x, mPlayer->getVelocity().y);
+	//adaptPlayerVelocity();
 	mSceneGraph.update(dT);
+	handleCollisions(dT);
 }
 void World::draw()
 {
 	mWindow.setView(mWorldView);
 	mWindow.draw(mSceneGraph);
+
+	mWindow.setView(mWindow.getDefaultView());
+	mWindow.draw(mStatistics);
 }
 CommandQueue& World::getWorldCommandQueue()
 {
@@ -50,7 +71,7 @@ void World::buildScene()
 	}
 	mTextures.load("assets/Textures/Abstract Platformer/PNG/Players/Player Blue/playerBlue_stand.png", Textures::PlayerSheet);
 	std::unique_ptr<Player> player(new Player(mTextures));
-	player->setPosition(80, 300);
+	player->setPosition(64, 64);
 
 	mPlayer = player.get();
 
@@ -64,41 +85,53 @@ void World::loadMap()
 	mSceneLayers[Category::BACKGROUND]->attachNode(std::move(mBackground));
 }
 
-void World::handleCollisions()
+void World::handleCollisions(sf::Time dT)
 {
 	std::set<SceneNode::Pair> collisionPairs;
 	mSceneGraph.checkSceneCollision(mSceneGraph, collisionPairs, getViewBounds());
+
 	for (SceneNode::Pair pair : collisionPairs) {
 		if (matchesCategories(pair, Category::PLAYER, Category::COLLISIONBLOCK)) {
-			sf::FloatRect intersection;
-			pair.first->getBoundingRect().intersects(pair.second->getBoundingRect(), intersection);
+			printf("COLLISION\n");
+
 			auto& player = static_cast<Player&>(*pair.first);
-			auto& collision = static_cast<CollisionNode&>(*pair.second);
+			auto& collisionBlock = static_cast<CollisionNode&>(*pair.second);
 
-			sf::Vector2f distance(collision.getPosition().x - player.getPosition().x,
-				collision.getPosition().y - player.getPosition().y);
+			sf::FloatRect intersection;
+			player.getBoundingRect().intersects(collisionBlock.getBoundingRect(), intersection);
 
-			sf::Vector2f playerPos(player.getPosition());
+			sf::Vector2f direction = player.getWorldPosition() - collisionBlock.getWorldPosition();
+			sf::Vector2f offset(0, 0);
 
-			float deltaX = player.getPosition().x - collision.getPosition().x;
-			float deltaY = player.getPosition().y - collision.getPosition().y;
-			if (std::abs(deltaX) > std::abs(deltaY))
-				if (deltaX > 0)
-					player.setPosition(playerPos.x + intersection.width, playerPos.y);
-				else
-					player.setPosition(playerPos.x + intersection.width, playerPos.y);
-			else
-				if (deltaY > 0)
-					player.setPosition(playerPos.x, playerPos.y + intersection.height + 5);
-				else
-					player.setPosition(playerPos.x, playerPos.y + intersection.height - 5);
-		}
+			if (abs(direction.x) < abs(direction.y)) {
+				if (direction.y < 0.001f) {
+					offset.y = intersection.height;
+					if (player.isFalling()) {
+						player.setFalling(false);
+						player.setJumping(false);
+					}
+				}
+				else {
+					offset.y = -1 * intersection.height;
+					player.setFalling(true);
+					player.setGravity(64);
+					player.setJumping(false);
+				}
+			}
+			if (abs(direction.x) > abs(direction.y) + 0.3) {
+				if (direction.x < 0) {
+					offset.x = intersection.width;
+				}
+				else {
+					offset.x = -1 * intersection.width;
+				}
+			}
 
-		if (matchesCategories(pair, Category::PLAYER, Category::ENEMIES)) {
-			printf("COL: P & E\n");
+			player.setPosition(player.getPosition() - offset);
 		}
 	}
 }
+
 bool matchesCategories(SceneNode::Pair& colliders, Category::Type type1, Category::Type type2)
 {
 	unsigned int category1 = colliders.first->getCategory();

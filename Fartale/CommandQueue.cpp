@@ -15,6 +15,5 @@ Command CommandQueue::pop()
 
 bool CommandQueue::isEmpty() const
 {
-	printf("command queue size: %d\n", mQueue.size());
 	return mQueue.empty();
 }

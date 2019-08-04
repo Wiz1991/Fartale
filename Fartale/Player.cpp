@@ -1,6 +1,8 @@
 #include "Player.h"
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
+
 Player::Player(TextureManager& textures)
 	: Entity(100)
 	, mSprite(textures.get(Textures::PlayerSheet))
@@ -17,6 +19,14 @@ void Player::drawCurrent(sf::RenderTarget& target, sf::RenderStates states) cons
 	states.transform *= getTransform();
 
 	target.draw(mSprite, states);
+	sf::RectangleShape box;
+	box.setSize(sf::Vector2f(getBoundingRect().width, getBoundingRect().height));
+	box.setFillColor(sf::Color::Transparent);
+	box.setPosition(getPosition());
+
+	box.setOutlineColor(sf::Color::Red);
+	box.setOutlineThickness(0.6);
+	//target.draw(box);
 }
 
 void Player::updateCurrent(sf::Time dT)

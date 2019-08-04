@@ -14,7 +14,8 @@ bool GameState::update(sf::Time dt)
 {
 	mWorld.update(dt);
 
-	mPlayer.handleRealTimeInput(mWorld.getWorldCommandQueue());
+	CommandQueue& queue = mWorld.getWorldCommandQueue();
+	mPlayer.handleRealTimeInput(queue);
 	return true;
 }
 

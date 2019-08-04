@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "CommandQueue.h"
 #include "Command.h"
+#include <SFML/Graphics/Text.hpp>
 namespace sf {
 	class RenderWindow;
 	class Time;
@@ -26,9 +27,11 @@ public:
 private:
 	void buildScene();
 	void loadMap();
-	void handleCollisions();
 	void adaptPlayerVelocity();
 	sf::FloatRect getViewBounds() const;
+private:
+
+	void handleCollisions(sf::Time dT);
 private:
 	sf::RenderWindow& mWindow;
 
@@ -42,6 +45,7 @@ private:
 	FontManager& mFonts;
 	sf::View mWorldView;
 	Player* mPlayer;
+	sf::Text mStatistics;
 
 	//DEBUGGING
 };

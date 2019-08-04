@@ -33,4 +33,12 @@ std::string toString(T value);
 void centerOrigin(sf::Sprite& sprite);
 void centerOrigin(sf::Text& text);
 
+template<class T>  T operator~ (T a);
+template<class T>  T operator| (T a, T b);
+template<class T>  T operator& (T a, T b);
+template<class T>  T operator^ (T a, T b);
+template<class T>  T& operator|= (T& a, T b);
+template<class T>  T& operator&= (T& a, T b);
+template<class T>  T& operator^= (T& a, T b);
+
 #include "Utilities.inl"

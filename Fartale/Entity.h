@@ -17,9 +17,28 @@ public:
 
 	int getHitpoints()const;
 
+	void setJumping(bool flag) {
+		jumping = flag;
+	}
+	void setFalling(bool flag) {
+		falling = flag;
+	}
+	void setGravity(float g) {
+		gravity = g;
+	}
+	bool isJumping() {
+		return jumping;
+	}
+	bool isFalling() {
+		return falling;
+	}
+
 protected:
 	virtual void updateCurrent(sf::Time dT);
 private:
 	int mHitPoints;
 	sf::Vector2f mVelocity;
+	float gravity;
+	bool falling;
+	bool jumping;
 };

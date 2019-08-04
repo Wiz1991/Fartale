@@ -9,7 +9,7 @@ Application::Application()
 	, mStatisticsFrames(0)
 	, mPlayer()
 	, mStateStack(State::Context(mWindow, mTextures, mFonts, mPlayer))
-	, displayStatistics(false)
+	, displayStatistics(true)
 
 {
 	mFonts.load("assets/Fonts/main.ttf", Fonts::MAIN);
@@ -33,16 +33,16 @@ void Application::run()
 	while (mWindow.isOpen()) {
 		sf::Time dT = clock.restart();
 		timeSinceLastUpdate += dT;
-		while (timeSinceLastUpdate > timePerUpdate)
-		{
-			timeSinceLastUpdate -= timePerUpdate;
+		//while (timeSinceLastUpdate > timePerUpdate)
+		//{
+		timeSinceLastUpdate -= timePerUpdate;
 
-			processEvents();
-			update(timePerUpdate);
+		processEvents();
+		update(dT);
 
-			if (mStateStack.isEmpty())
-				mWindow.close();
-		}
+		if (mStateStack.isEmpty())
+			mWindow.close();
+		//}
 		updateStatistics(dT);
 		render();
 	}

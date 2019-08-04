@@ -4,6 +4,9 @@
 Entity::Entity(int hitPoints)
 	: mHitPoints(hitPoints)
 	, mVelocity(0, 0)
+	, gravity(64)
+	, falling(true)
+	, jumping(false)
 {
 }
 
@@ -51,5 +54,17 @@ int Entity::getHitpoints() const
 
 void Entity::updateCurrent(sf::Time dT)
 {
+	if (jumping) {
+		gravity -= 600;
+		mVelocity.y = -gravity;
+		if (gravity <= 0) {
+			jumping = false;
+			falling = true;
+		}
+	}
+	if (falling) {
+		gravity += 5;
+		mVelocity.y = gravity;
+	}
 	move(mVelocity * dT.asSeconds());
 }

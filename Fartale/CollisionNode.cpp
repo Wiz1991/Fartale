@@ -20,12 +20,12 @@ sf::FloatRect CollisionNode::getBoundingRect() const
 void CollisionNode::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	sf::RectangleShape box;
-	box.setSize(sf::Vector2f(mCollisionMask.width, mCollisionMask.height));
+	box.setSize(sf::Vector2f(getBoundingRect().width, getBoundingRect().height));
 	box.setFillColor(sf::Color::Transparent);
 	box.setPosition(getPosition());
 
 	box.setOutlineColor(sf::Color::Red);
 	box.setOutlineThickness(0.6);
 
-	target.draw(box, states);
+	//target.draw(box);
 }
