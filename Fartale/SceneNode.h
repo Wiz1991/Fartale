@@ -29,8 +29,8 @@ public:
 	virtual sf::FloatRect getBoundingRect() const;
 	virtual unsigned int getCategory() const;
 
-	void checkSceneCollision(SceneNode& sceneGraph, std::set<Pair>& collisionPairs, sf::FloatRect view);
-	void checkNodeCollision(SceneNode& node, std::set<Pair>& collisionPairs, sf::FloatRect view);
+	void checkSceneCollision(SceneNode& sceneGraph, std::vector<Pair>& collisionPairs, sf::FloatRect view);
+	void checkNodeCollision(SceneNode& node, std::vector<Pair>& collisionPairs, sf::FloatRect view);
 
 	void onCommand(const Command& command, sf::Time dT);
 private:

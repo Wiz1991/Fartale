@@ -77,7 +77,7 @@ sf::FloatRect SceneNode::getBoundingRect() const
 	return sf::FloatRect();
 }
 
-void SceneNode::checkSceneCollision(SceneNode& sceneGraph, std::set<Pair>& collisionPairs, sf::FloatRect view)
+void SceneNode::checkSceneCollision(SceneNode& sceneGraph, std::vector<Pair>& collisionPairs, sf::FloatRect view)
 {
 	if (view.contains(sceneGraph.getPosition()))
 		checkNodeCollision(sceneGraph, collisionPairs, view);
@@ -86,11 +86,11 @@ void SceneNode::checkSceneCollision(SceneNode& sceneGraph, std::set<Pair>& colli
 		checkSceneCollision(*child, collisionPairs, view);
 }
 
-void SceneNode::checkNodeCollision(SceneNode& node, std::set<Pair>& collisionPairs, sf::FloatRect view)
+void SceneNode::checkNodeCollision(SceneNode& node, std::vector<Pair>& collisionPairs, sf::FloatRect view)
 {
 	if (view.contains(node.getPosition()))
 		if (this != &node && collision(*this, node))
-			collisionPairs.insert(std::minmax(this, &node));
+			collisionPairs.push_back(std::minmax(this, &node));
 
 	for (Ptr& child : mChildren)
 		child->checkNodeCollision(node, collisionPairs, view);

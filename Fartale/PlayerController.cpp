@@ -56,11 +56,8 @@ void PlayerController::initializeActions()
 	mActionBindings[jump].action = [&](SceneNode& node, sf::Time dT) {
 		assert(dynamic_cast<Player*>(&node) != nullptr);
 		auto& player = static_cast<Player&>(node);
-		if (player.isJumping() || player.isFalling()) return;
-		if (!player.isJumping()) {
-			player.setJumping(true);
-			player.setGravity(64);
-		}
+
+		player.setVelocity(0, -500);
 	};
 
 	mActionBindings[moveDown].action = derivedAction<Player>(Controller(0, playerSpeed));

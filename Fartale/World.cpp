@@ -7,6 +7,8 @@
 #include <iomanip>
 #include <sstream>
 
+#include <SFML/Graphics/RectangleShape.hpp>
+
 World::World(sf::RenderWindow& window, FontManager& fonts)
 	: mWorldView(window.getDefaultView())
 	, mTextures()
@@ -40,7 +42,7 @@ void World::update(sf::Time dT)
 
 	//mWorldView.setCenter(mPlayer->getPosition());
 
-	mPlayer->setVelocity(0, 0);
+	//mPlayer->setVelocity(0, 0);
 
 	while (!mCommandQueue.isEmpty())
 		mSceneGraph.onCommand(mCommandQueue.pop(), dT);
@@ -69,7 +71,7 @@ void World::buildScene()
 		mSceneLayers[i] = layer.get();
 		mSceneGraph.attachNode(std::move(layer));
 	}
-	mTextures.load("assets/Textures/Abstract Platformer/PNG/Players/Player Blue/playerBlue_stand.png", Textures::PlayerSheet);
+	mTextures.load("assets/Textures/Abstract Platformer/PNG/Other/blockBrown.png", Textures::PlayerSheet);
 	std::unique_ptr<Player> player(new Player(mTextures));
 	player->setPosition(64, 64);
 
@@ -87,13 +89,25 @@ void World::loadMap()
 
 void World::handleCollisions(sf::Time dT)
 {
-	std::set<SceneNode::Pair> collisionPairs;
+	std::vector<SceneNode::Pair> collisionPairs;
 	mSceneGraph.checkSceneCollision(mSceneGraph, collisionPairs, getViewBounds());
+
+	/*sf::Vector2f playerPos = mPlayer->getWorldPosition();*/
+
+	/*std::sort(collisionPairs.begin(), collisionPairs.end(), [&playerPos](auto pairL, auto pairR) {
+		auto left = static_cast<SceneNode*>(pairL.second);
+		auto right = static_cast<SceneNode*>(pairR.second);
+		sf::Vector2f vec = playerPos - left->getWorldPosition();
+		float lengthLeft = (vec.x * vec.x) + (vec.y * vec.y);
+
+		sf::Vector2f vec2 = playerPos - right->getWorldPosition();
+		float lengthRight = (vec2.x * vec.x) + (vec2.y * vec.y);
+
+		return lengthLeft < lengthRight;
+		});*/
 
 	for (SceneNode::Pair pair : collisionPairs) {
 		if (matchesCategories(pair, Category::PLAYER, Category::COLLISIONBLOCK)) {
-			printf("COLLISION\n");
-
 			auto& player = static_cast<Player&>(*pair.first);
 			auto& collisionBlock = static_cast<CollisionNode&>(*pair.second);
 
@@ -103,30 +117,23 @@ void World::handleCollisions(sf::Time dT)
 			sf::Vector2f direction = player.getWorldPosition() - collisionBlock.getWorldPosition();
 			sf::Vector2f offset(0, 0);
 
-			if (abs(direction.x) < abs(direction.y)) {
-				if (direction.y < 0.001f) {
+			if (fabs(direction.x) < fabs(direction.y)) {
+				if (direction.y < 0) {
 					offset.y = intersection.height;
-					if (player.isFalling()) {
-						player.setFalling(false);
-						player.setJumping(false);
-					}
 				}
-				else {
+				else if (direction.y > 0) {
 					offset.y = -1 * intersection.height;
-					player.setFalling(true);
-					player.setGravity(64);
-					player.setJumping(false);
-				}
-			}
-			if (abs(direction.x) > abs(direction.y) + 0.3) {
-				if (direction.x < 0) {
-					offset.x = intersection.width;
-				}
-				else {
-					offset.x = -1 * intersection.width;
 				}
 			}
 
+			if (fabs(direction.x) > fabs(direction.y)) {
+				if (direction.x < 0) {
+					offset.x = intersection.width;
+				}
+				else if (direction.x > 0) {
+					offset.x = -1 * intersection.width;
+				}
+			}
 			player.setPosition(player.getPosition() - offset);
 		}
 	}
